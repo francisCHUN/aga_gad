@@ -19,21 +19,11 @@ log = logging.getLogger("aga.llm.openai")
 
 
 DEFAULT_TOKENS = [
-    "zp1McBCodufO8fYixi8WJ0SobO40HY0i", "iyooL0UnH1axewcfb1KX0I8lM6nXPAXK",
-    "craqgBzsnV47w94KdTKBw70SAEk8OnVc", "0ZpEFKSVvzSj7Dm3Bir7VLA4jPmX683l",
-    "r7ai4lWyy3cEKE5QQ6ndnzi1v5EAsPga", "DwQDyu7hjUEEUuXtJ95rZSEfOQ9QJYwe",
-    "xEudRWZl900WX7OxPfEu6Ae8XUNLh3y2", "NMoazcMcAEUs3uZ9SIHz7VqSrDQgFuSc",
-    "0GmD8AtvlizrYAUVhlR0Dowvrjxuz8ec", "gUq3qMjkP1ztCzoq7m4xgh3K50GeRE8j",
-    "febdRz4QyfCq8iniKpKA8wmfI3zIbJlp", "9grcbzYwVZzh275UHIioRzZ1RKMZygBW",
-    "LxzsFoLCjnsTxW6112G5QeJKkK8auCHA", "hipfjNJ5Bu2izMpUz2dzQwguWSxMZRQd",
-    "riBXro0bw1smcZ0LR1Tz8i6AkLGCEkx3", "8hTsQRMA9e52WMD7k4Am97UU0nojqpBF",
-    "Gf5H6DcI6CMROTmhWYtixAHQhhakXdok", "fvyugV5xI34qESKCzgSgFETDu9nTtHu1",
-    "oZN1xHR1F3C4cyEp6abyPg2JIdw69LIQ", "knLKvkFXY7u72YdUcPa2dvaFBgsFDe8A",
-    "BcCivTUiSGZ1RlcYasc0LEjVfpUlBGRW", "s1p5Gx3wqvXWnkUC0MZcNFHmYJF509Bj",
+    "token_key"
 ]
 
-ANTCHAT_URL = "https://antchat.alipay.com/v1/chat/completions"
-DEFAULT_MODEL = "Qwen3-235B-A22B-Instruct-2507"
+ANTCHAT_URL = "url"
+DEFAULT_MODEL = "model_names"
 
 
 class DummyBackend:
@@ -421,10 +411,10 @@ class OpenAIBackend(_Stub):
         return out[:n]
 
 
-SOHOYO_URL = "https://openai.sohoyo.io/v1/chat/completions"
+SOHOYO_URL = "url"
 SOHOYO_DEFAULT_MODEL = "gpt-6-astra"
 SOHOYO_TIMEOUT = 120
-SOHOYO_KEY_FILE = "configs/sohoyo_key.local"
+SOHOYO_KEY_FILE = "configs/key.local"
 SOHOYO_POST_RETRIES = 3
 SOHOYO_BACKOFF = 2.0
 
