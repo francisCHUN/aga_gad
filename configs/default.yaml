@@ -1,0 +1,139 @@
+dataset:
+  name: History
+  data_dir: ./data/
+
+split:
+  seed: 42
+  val_ratio: 0.0
+  test_ratio: 0.60
+
+llm:
+  backend: openai
+  model: Qwen3-235B-A22B-Instruct-2507
+  temperature: 0.2
+  max_tokens: 2500
+
+generation:
+  default_anomaly_ratio: 0.05
+  max_new_per_pattern: 200
+  seed: 42
+
+patterns:
+  fixed:
+    - context_attack
+    - semantic_camouflage
+    - bridge_attack
+    - hybrid_attack
+    - hub_attack
+  allow_proposed: true
+
+text_gen:
+  enabled: true
+  model: sentence-transformers/msmarco-MiniLM-L-12-v3
+  allow_download: false
+
+training:
+  model: h2fdetector
+  epochs: 100
+  lr: 0.005
+  hidden: 64
+  layers: 3
+  dropout: 0.2
+  device: cuda
+  per_model:
+    gcn:   { lr: 0.001, hidden: 128, layers: 2, dropout: 0.5, class_weight: inverse } 
+    gat:   { lr: 0.001, hidden: 64, layers: 2, dropout: 0.2, epochs: 200, class_weight: inverse }
+    mlp:   { lr: 0.01, hidden: 128, layers: 2, dropout: 0.2, class_weight: inverse }
+    graphsage: { lr: 0.005, hidden: 64, layers: 2, dropout: 0.5, class_weight: inverse }
+    amnet: { lr: 0.005, hidden: 64,  layers: 2, dropout: 0.5, epochs: 600, class_weight: none }
+    pcgnn: { lr: 0.005, hidden: 64, layers: 2, dropout: 0.5, epochs: 300, class_weight: inverse }
+    gaga:  { lr: 0.005, dropout: 0.2, epochs: 200, class_weight: sqrt } 
+    sagad: { lr: 0.005, epochs: 200, dropout: 0.2, class_weight: sqrt }
+    gadam: { lr: 0.01, epochs: 200, layers: 2 }
+  class_weight: inverse
+  attr_weight: 1.0
+  stru_weight: 1.0
+
+models:
+  dominant:
+    n_layers: 3
+  cola:
+    readout: avg
+    negsamp_round: 1
+    subgraph_size: 4
+    batch_size: 256
+  mlp:
+    n_layers: 2
+  graphsage:
+    n_layers: 2
+    agg: mean
+  gcn:
+    n_layers: 2
+  gat:
+    n_layers: 2
+    num_heads: 4
+  bwgnn:
+    d: 2
+  amnet:
+    orders: 1
+    num_layers: 2
+    head: 4
+    mlp_layers: 1
+  h2fdetector:
+    n_layers: 2
+    head: 4
+    intra_dim: 64
+    gamma1: 1.0
+    gamma2: 1.0
+  gdn:
+    n_relation: 1
+    fn_weight: 1.0
+    batch_size: 256
+  care_gnn:
+    inter: GNN
+    step_size: 0.02
+    lambda_1: 1.0
+    use_rl: true
+  ghrn:
+    d: 2
+    prune_ratio: 0.015
+    prune_at_epoch: 50
+    adj_type: sym
+    preserve_synthetic: true
+  spacegnn:
+    hidden: 128
+    n_layers: 3
+    dropout: 0.05
+    alpha: 0.5
+    beta: 0.5
+    std_neg: 0.015
+    std_pos: 0.015
+  gaga:
+    emb_dim: 16
+    n_layers: 2
+    n_heads: 4
+    ff_dim: 64
+    dropout: 0.0
+    n_hops: 2
+    norm_feat: true
+    grp_norm: false
+  pmp:
+    hidden: 48
+    n_layers: 1
+    num_trans: 1
+    dropout: 0.0
+    norm_feat: true
+    synthetic_mode: fraud
+
+review:
+  accept_insufficient: false
+
+cache:
+  enabled: true
+  dir: ./cache/
+  force_refresh: false
+  generation_scope: default
+
+eval:
+  mask: test_mask
+  metrics: [auc, ap, f1]

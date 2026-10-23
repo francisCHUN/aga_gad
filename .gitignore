@@ -1,0 +1,34 @@
+# --- datasets & caches (not for the repo) ---
+/data/
+cache/
+
+# --- review-flow runtime artifacts (exported packages / drafts / e2e) ---
+review_run*/
+e2e_review*/
+.playwright-cli/
+_e2e_*
+e2e-*.png
+e2e-*.yaml
+
+# --- archives ---
+*.zip
+
+# --- runtime / generated artifacts ---
+logs/
+*.log
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# --- generated plots ---
+tsne_compare.png
+embedding_similarity.png
+
+# --- local IDE data ---
+.codebuddy/
+
+# --- secrets & OS junk ---
+configs/sohoyo_key.local
+*.local
+.DS_Store
